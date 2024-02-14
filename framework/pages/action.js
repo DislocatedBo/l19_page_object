@@ -1,51 +1,33 @@
-import LoginPage from './LoginPage';
-import RegistrationPage from './RegistrationPage';
-import ContactListPage from './ContactListPage';
-import contactaddpage from './contactaddpage';
-import contactdetalipage from './contactdetalipage';
+ import LoginPage from './LoginPage';
+import InventoryPage from './InventoryPage';
 
 
 export default class Actions {
     constructor(page) {
         this.page = page;
         this.loginPage = new LoginPage(page);
-        this.registrationPage = new RegistrationPage(page);
-        this.contactListPage = new ContactListPage(page);
-        this.contactaddpage = new contactaddpage(page);
-        this.contactdetalipage = new contactdetalipage(page);
+        this.inventoryPage = new InventoryPage(page);
     }
   
-    async registerAndLogin(firstName, lastName, email, password) {
-      await this.registrationPage.navigateToRegistrationPage();
-      await this.registrationPage.enterFirstName(firstName);
-      await this.registrationPage.enterLastName(lastName);
-      await this.registrationPage.enterEmail(email);
-      await this.registrationPage.enterPassword(password);
-      await this.registrationPage.clickSubmitButton();
-      await this.registrationPage.waitForContactListPage();
-    }
-  
-    async login(email, password) {
+    async login(testname, testpass) {
       await this.loginPage.navigateToLoginPage();
-      await this.loginPage.enterEmail(email);
-      await this.loginPage.enterPassword(password);
-      await this.loginPage.clickSubmitButton();
-      await this.loginPage.waitForContactListPage();
+      await this.loginPage.enterUsername(testname);
+      await this.loginPage.enterPassword(testpass);
+      await this.loginPage.clickLoginButton();
+      await this.loginPage.waitForinventoryPage();
     }
   
-    async logout() {
-      await this.contactListPage.clickLogoutButton();
-      await this.contactListPage.waitForHomePage();
+    async hamburgerOpened() {
+      await this.inventoryPage.clickHamburgerMenuButton();
     }
-    async addContact(firstName, lastName, date, contactEmail, phone, street1, street2, city, state, zip, country) {
-        await this.contactListPage.clickaddcontactButton();
-        await this.contactaddpage.waitForContactaddPage();
-        await this.contactaddpage.enterContactDetails(firstName, lastName, date, contactEmail, phone, street1, street2, city, state, zip, country);
-        await this.contactaddpage.clickaddContactButton();
-      }
-      async deleteContact(firstName, lastName) {
-        await this.contactListPage.clickContact(firstName, lastName);
-        await this.contactdetalipage.waitForContactDetailsPage();
-        await this.contactdetalipage.clickDeleteContactButton();
-      }
+
+    async hamburgerClosed() {
+      await this.inventoryPage.clickHamburgerMenuCloseButton();
+    }
+
+    async inventoryItem() {
+      await this.inventoryPage.clickInventoryItemButton();
+      await this.inventoryPage.waitForInventoryItemPageLoad();
+      await this.inventoryPage.clickBackToProductsButton();
+    }
   }

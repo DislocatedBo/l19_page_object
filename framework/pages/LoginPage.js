@@ -10,19 +10,19 @@ export default class LoginPage {
       await this.page.goto(config.baseUrl);
     }
   
-    async enterEmail(email) {
-      await this.page.getByPlaceholder('Email').fill(email);
+    async enterUsername(testname) {
+      await this.page.getByPlaceholder('Username').fill(testname);
     }
   
-    async enterPassword(password) {
-      await this.page.getByPlaceholder('Password').fill(password);
+    async enterPassword(testpass) {
+      await this.page.getByPlaceholder('Password').fill(testpass);
     }
   
-    async clickSubmitButton() {
-      await this.page.getByRole('button', { name: 'Submit' }).click();
+    async clickLoginButton() {
+      await this.page.click('[data-test="login-button"]');
     }
   
-    async waitForContactListPage() {
-      await this.page.waitForURL(config.baseUrl + "/contactList");
+    async waitForinventoryPage() {
+      await this.page.waitForURL(config.baseUrl + "/inventory.html");
     }
   }
